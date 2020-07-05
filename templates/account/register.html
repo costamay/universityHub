@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+ 
+{% block content %}
+<style>
+    .form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  box-shadow: 10px 10px 10px 10px #888888 ;
+}
+
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="email"] {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: -1px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+
+}
+image{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+<form class="form-signin" method="post">
+  {% csrf_token %}
+  <div class="image d-flex flex-column pb-3">
+    <img class="img-fluid mx-auto d-block  " src="{% static 'img/logo1.png' %}" alt="" width="150" height="150">
+  </div>
+  
+  <h1 class="h3 mb-3 font-weight-bolder text-center">Register an account</h1>
+  <input type="text" id="inputUsername" name="first_name" class="form-control" placeholder="Firstname" required autofocus >
+
+  <input type="text" id="inputFirstname" name="last_name" class="form-control" placeholder="Lastname" required >
+
+  <input type="email" id="inputLastname" name="email" class="form-control" placeholder="Email address" required >
+
+  <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required >
+
+  <input type="password"  id="inputPassword1" name="password1" class="form-control" placeholder="Password" required>
+
+  <input type="password"  id="inputPassword2" name="password2" class="form-control" placeholder="Confirm password" required>
+
+  {% for  field in registration_form %}
+        <p>
+          {% for error in field.errors %}
+          <p style="color: red;">{{ error }}</p> 
+          {% endfor %}
+        </p>
+    {% endfor %}
+    {% if registration.non_field_errors %}
+        <div style="color: red;">
+            <p>{{ fegistration.non_field_errors }}</p>
+        </div>
+      {% endif %}
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+  
+</form>
+
+{% endblock %}

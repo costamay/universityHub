@@ -31,6 +31,15 @@
               <div class="dropdown-menu mt-lg-4" aria-labelledby="navbarDropdownMenuLink"><a class="dropdown-item font-weight-bold text-small" href="index.html">Home</a><a class="dropdown-item font-weight-bold text-small" href="about.html">About</a><a class="dropdown-item font-weight-bold text-small" href="contact.html">Contact                </a></div>
             </li>
             <!-- <li class="nav-item ml-lg-3 pl-lg-3"><a class="btn btn-outline-primary btn-sm" href="contact.html">Request a quote</a></li> -->
+            {% if request.user.is_authenticated %}
+            <li class="nav-item mx-2">Hello, {{ request.user.username }}</li>
+            <li class="nav-item mx-2"><a class="nav-link text-uppercase btn btn-outline-info rounded" href="{% url 'logout' %}">Logout</a></li>
+            <li class="nav-item mx-2"><a class="nav-link text-uppercase btn btn-outline-info rounded" href="{% url 'account' %}">Account</a></li>
+            
+            {% else %}
+            <li class="nav-item mx-2"><a class="nav-link text-uppercase btn btn-outline-danger rounded" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item mx-2"><a class="nav-link text-uppercase btn btn-outline-danger rounded" href="{% url 'register' %}">Register</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
