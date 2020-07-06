@@ -5,7 +5,7 @@ from django.urls import path, include
 
 from account.views import registration_view,logout_view,login_view, account_view
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', include('posts.urls')),
     path('register/', registration_view, name='register'),
     path('logout/', logout_view, name='logout'),
