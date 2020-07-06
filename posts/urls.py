@@ -7,7 +7,10 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('about/', views.about, name='about'),
-     path('contact/', views.contact, name='contact')
+    path('projects/', views.projectList, name='post-list'),
+    path('post/<id>/', views.singleproject, name='post-detail'),
+    path('create/', views.post_project, name='post-create'),
+    path('post/<id>/update/', views.post_update, name='post_update'),
     
 ]
 if settings.DEBUG:
