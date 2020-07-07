@@ -15,9 +15,9 @@
               <div class="post-thumbnail"><img src="{{ post.project_image.url }}" alt="..." class="img-fluid"></div>
               <div class="post-details">
                 <div class="post-meta d-flex justify-content-between">
-
-                    <a href="{% url 'post_update' id=post.id %}">Update</a>
-                    
+                  {% if post.author == request.user %}
+                    <a href="{% url 'post_update' id=post.id %}" class="btn btn-primary">Update</a>
+                    {% endif %}
                   </div>
                 </div>
                 <h1>{{ post.project_name }}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>

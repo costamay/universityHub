@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from posts.models import *
+from account.models import Account
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import HttpResponse
 
 from .forms import *
 
+PROJECTS_PER_PAGE = 1
 def get_author(user):
     qs = Author.objects.filter(user=user)
     if qs.exists():
@@ -17,6 +21,16 @@ def about(request):
 
 def projectList(request):
     projects = ProjectPost.objects.all()
+    
+    page = request.GET.get('page', 1)
+    projects_paginator = Paginator(projects, PROJECTS_PER_PAGE)
+    
+    try:
+        projects = projects_paginator.page(page)
+    except PageNotAnInteger:
+        projects = projects_paginator.page(PROJECTS_PER_PAGE)
+    except EmptyPage:
+        projects = projects_paginator.page(projects_paginator.num_pages)
     context = {
         'projects': projects
     }
@@ -45,9 +59,10 @@ def singleproject(request, id):
 def post_project(request):
     title = 'Post your project here'
     form = PostForm(request.POST or None, request.FILES or None)
-    author = get_author(request.user)
+    user = request.user
     if request.method == 'POST':
         if form.is_valid():
+            author = Account.objects.filter(email=user.email).first()
             form.instance.author = author
             form.save()
             return reverse(reverse('post-detail', kwargs={
@@ -64,9 +79,14 @@ def post_update(request, id):
     title = 'Update'
     post = get_object_or_404(ProjectPost, id=id)
     form = PostForm(request.POST or None, request.FILES or None, instance=post)
-    author = get_author(request.user)
+    user = request.user
+    
+    if post.author != user:
+        return HttpResponse('You are not the author of that project.')
+    
     if request.method == 'POST':
         if form.is_valid:
+            author = Account.objects.filter(email=user.email).first()
             form.instance.author = author
             form.save()
             return reverse(reverse('post-detail', kwargs={

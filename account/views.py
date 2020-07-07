@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from account.forms import *
+from posts.models import ProjectPost
 
 def registration_view(request):
     context= {}
@@ -72,5 +73,9 @@ def account_view(request):
             }
         )
     context['account_form'] = form
+    
+    project_posts = ProjectPost.objects.filter(auther=request.user)
+    context['project_posts'] = project_posts
+    
     return render(request, 'account/account.html', context)
     

@@ -34,6 +34,11 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+.project-posts{
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+}
 </style>
 <form class="form-signin" method="post">
   {% csrf_token %}
@@ -65,6 +70,25 @@
 </form>
 <div class="d-flex flex-column">
   <a class="m-auto" href="{% url 'password_change' %}">Change password</a>
+</div>
+
+<div class="container mt-4 p-4">
+  <div class="row">
+    <div class="project-post">
+      <h3 class="mb-3 font-weight-normal">Project posts:</h3>
+      {%if project_posts %}
+      <ul>
+        {% for post in project_posts %}
+          <a href="{{ post.get_absolute_url }}" style="text-decoration: none;">
+            <li class="list-group-items">{{post}}</li>
+          </a>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>You have no project posts. Create a post <a href="{% ur 'post-create' %}">here</a></p>
+      {% endif %}
+    </div>
+  </div>
 </div>
 
 {% endblock %}
