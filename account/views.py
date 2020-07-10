@@ -74,7 +74,7 @@ def account_view(request):
         )
     context['account_form'] = form
     
-    project_posts = ProjectPost.objects.filter(auther=request.user)
+    project_posts = ProjectPost.objects.filter(author=request.user.author)
     context['project_posts'] = project_posts
     
     return render(request, 'account/account.html', context)

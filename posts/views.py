@@ -60,6 +60,7 @@ def post_project(request):
     title = 'Post your project here'
     form = PostForm(request.POST or None, request.FILES or None)
     user = request.user
+    
     if request.method == 'POST':
         if form.is_valid():
             author = Account.objects.filter(email=user.email).first()
