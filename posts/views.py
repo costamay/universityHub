@@ -60,15 +60,18 @@ def post_project(request):
     title = 'Post your project here'
     form = PostForm(request.POST or None, request.FILES or None)
     user = request.user
+
+    if not user.is_authenticated:
+        return redirect('login')
     
     if request.method == 'POST':
         if form.is_valid():
-            author = Account.objects.filter(email=user.email).first()
-            form.instance.author = author
-            form.save()
-            return reverse(reverse('post-detail', kwargs={
-                'id': form.instance.id
-            } ))
+            obj= form.save(commit=False)
+            author = user.author
+            obj.author = author
+            obj.save()
+            return redirect("post-list")
+            
     context = {
         'title': title,
         'form': form
