@@ -17,8 +17,9 @@
             {{post.project_description | safe }}
            </div>
            <div class="title"><span><p> Posted by: {{ post.author.user.username}}</p></span></div>
-
-        </div>
+           <!-- <div class="post-thumbnail"><span><p>Visit the site: </p></span></div> -->
+           <a class="btn btn-primary" href="{{post.project_url}}">Visit the Site.</a>
+          </div>
         <div class="col-md-6 mx-auto mt-4">
           <!-- <div class="post-comments">
             <header>
@@ -47,7 +48,7 @@
             {% if request.user.is_authenticated %}
                 <div class="add-comment">
                   <header>
-                    <h3 class="h6">Leave a Comment</h3>
+                    <h2 class="h6">Leave a Comment</h2>
                   </header>
                   <form method ='POST' action="." class="commenting-form">
                     <div class="row">
