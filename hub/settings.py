@@ -76,8 +76,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'uniprojects',
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'postgres',
+        'PASSWORD': '@Sopiti1221',
+        'PORT': '8080',
     }
 }
 
