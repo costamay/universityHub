@@ -6,10 +6,10 @@
   }
 </style>
  {% block content %}  
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <!-- Latest Posts -->
-        <div class="col-md-6 mx-auto mt-4">
+        <div class="col-md-6 mx-auto mt-4 mb-4">
           <h2>{{ post.project_name }}<a href="#"><i class="fa fa-bookmark-o"></i></a></h2>
           <div class="post-thumbnail"><img src="{{ post.project_picture.url }}" alt="..." class="img-fluid">
           </div>
@@ -18,14 +18,14 @@
            </div>
            <div class="title"><span><p> Posted by: {{ post.author.user.username}}</p></span></div>
            <!-- <div class="post-thumbnail"><span><p>Visit the site: </p></span></div> -->
-           <a class="btn btn-primary" href="{{post.project_url}}">Visit the Site.</a>
+           <a class="btn btn-primary" href="{{post.project_url}}" target="_blank">Visit the Site.</a>
           </div>
         <div class="col-md-6 mx-auto mt-4">
-          <!-- <div class="post-comments">
+          <div class="post-comments">
             <header>
               <h2>Project Comments</h2>
-            </header> -->
-            <!-- {% for comment in post.get_comments %}
+            </header>
+            {% for comment in post.get_comments %}
             <div class="comment">
               <div class="comment-header d-flex justify-content-between">
                 <div class="user d-flex align-items-center">
@@ -36,14 +36,14 @@
                     <img src="{% static 'img/user.svg' %}" alt="..." class="img-fluid rounded-circle">
                     {% endif %}
                   </div>
-                  <div class="title"><strong>{{ comment.user.username}}</strong><span class="date">{{ comment.timestamp | timesince}} ago</span></div>
+                  <div class="title"><strong>{{ comment.user.username}}</strong><span class="date">{{ comment.timestamp}} </span></div>
                 </div>
               </div>
               <div class="comment-body">
                 <p>{{ comment.description }}</p>
               </div>
             </div>
-            {% endfor %} -->
+            {% endfor %}
 
             {% if request.user.is_authenticated %}
                 <div class="add-comment">

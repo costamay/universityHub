@@ -6,7 +6,7 @@ from django.http import HttpResponse
 
 from .forms import *
 
-PROJECTS_PER_PAGE = 1
+PROJECTS_PER_PAGE = 10
 def get_author(user):
     qs = Author.objects.filter(user=user)
     if qs.exists():
@@ -39,12 +39,14 @@ def projectList(request):
 
 def singleproject(request, id):
     post = get_object_or_404(ProjectPost, id=id)
-    print(post)
+    print(post.id)
     form = CommentForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
+            form.save(commit=False)
             form.instance.user = request.user
             form.instance.post = post
+            form.instance.project_posted = post
             form.save()
             return redirect(reverse('post-detail', kwargs={
                 'id': post.id

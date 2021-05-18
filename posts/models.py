@@ -15,7 +15,16 @@ class Author(models.Model):
     
     def __str__(self):
         return self.user.username
+
+class Comment(models.Model):
+    project_posted = models.ForeignKey('ProjectPost', related_name='comments', on_delete=models.CASCADE)
+    description = models.TextField(max_length=200, default=False)
+    timestamp = models.DateField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     
+    def __str__(self):
+        return self.user.username
+
 class ProjectPost(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     project_name = models.CharField(max_length=100, default=False)
@@ -44,14 +53,7 @@ class ProjectPost(models.Model):
     def comment_count(self):
         return Comment.objects.filter(project_posted=self).count()
     
-class Comment(models.Model):
-    project_posted = models.ForeignKey(ProjectPost, related_name='comments', on_delete=models.CASCADE)
-    description = models.TextField(max_length=200, default=False)
-    timestamp = models.DateField(auto_now_add=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return self.user.username
+
     
     
     

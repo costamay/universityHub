@@ -11,7 +11,7 @@
             <div class="row">
               <!-- post -->
               {% for post in projects %}
-              <div class=" card post col-xl-6">
+              <div class=" card post col-xl-6 mt-4 mb-4" >
                 <div class="card-header"> 
                     <a href="{{ post.get_absolute_url }}">
                         <h3 class="h4">{{ post.project_name }}</h3></a>
@@ -19,21 +19,21 @@
                 <div class="post-thumbnail"><a href="{{ post.get_absolute_url }}"><img src="{{ post.project_picture.url }}" alt="..." class="img-fluid"></a>
                 </div>
                 <div class=" card-body post-details">
-                  <!-- <div class="post-meta d-flex justify-content-between">
+                  <div class="post-meta d-flex justify-content-between">
                     
                     
-                  </div> -->
+                  </div>
                  
                   <!-- <p class="text-muted">{{ post.project_description }}</p> -->
 
-                  <!-- <footer class="post-footer d-flex align-items-center">
+                  <footer class="post-footer d-flex align-items-center">
                     <a href="#" class="author d-flex align-items-center flex-wrap">
                     <div class="avatar"><img src="{{ post.author.profile_image.url }}" alt="..." class="img-fluid" width="50" height="50" style="border-radius: 50%;"></div>
                      
                     </a>
-                    <div class="date"><i class="icon-clock"></i> {{ post.timestamp | timesince }} ago</div>
+                    <div class="date"><i class="icon-clock"></i> {{ post.timestamp }} </div>
                     <div class="comments meta-last"><i class="icon-comment"></i>{{ post.comment_count}}</div>
-                  </footer> -->
+                  </footer>
                 </div>
                 <div class="title"><span><p> Posted by: {{ post.author.user.username}}</p></span></div>
               </div>
@@ -42,7 +42,7 @@
             </div>
            
           </div>
-        </main>
+      
        
       </div>
     </div>
