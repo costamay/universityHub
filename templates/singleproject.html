@@ -33,7 +33,7 @@
                     {% if comment.user.author %}
                     <img src="{{ comment.user.author.profile_image.url }}" alt="..." class="img-fluid rounded-circle" height="50px" width="50px">
                     {% else %}
-                    <img src="{% static 'img/user.svg' %}" alt="..." class="img-fluid rounded-circle">
+                    <img src="{% static 'img/user.svg' %}" alt="..." class="img-fluid rounded-circle" height="50px" width="50px">
                     {% endif %}
                   </div>
                   <div class="title"><strong>{{ comment.user.username}}</strong><span class="date">{{ comment.timestamp}} </span></div>

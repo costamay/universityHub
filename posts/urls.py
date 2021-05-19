@@ -11,6 +11,7 @@ urlpatterns = [
     path('post/<id>/', views.singleproject, name='post-detail'),
     path('create/', views.post_project, name='post-create'),
     path('post/<id>/update/', views.post_update, name='post_update'),
+    path('account/', views.account_view, name='account'),
     
 ]
 if settings.DEBUG:

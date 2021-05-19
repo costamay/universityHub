@@ -17,3 +17,18 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('description', )
+
+class AuthorUpdateForm(forms.ModelForm):
+    
+    class Meta:
+        model = Author
+        fields = ['profile_image']
+                  
+    def clean_profile_image(self):
+        if self.is_valid():
+            profile_image = self.cleaned_data['profile_image']
+            try:
+                author = Author.objects.exclude(pk=self.instance.pk).get(profile_image=profile_image)
+            except Author.DoesNotExist:
+                return profile_image
+            raise forms.ValidationError('Profile image "%s" is already in use.' % profile_image)

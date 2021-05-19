@@ -39,38 +39,68 @@
   width: 100%;
   margin: auto;
 }
+label{
+  display: none;
+}
 </style>
-<form class="form-signin" method="post">
-  {% csrf_token %}
-  <!-- <img class="mb-4" src="{{ site.baseurl }}/docs/{{ site.docs_version }}/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
-  <h1 class="h3 mb-3 font-weight-bolder text-center">Account</h1>
-  
-  <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus value="{{ account_form.initial.email }}">
-
-  <input type="text"  id="inputUsername" name="username" class="form-control" placeholder="username" required value="{{ account_form.initial.username }}">
-
-  {% for  field in account_form %}
-        <p>
-          {% for error in field.errors %}
-          <p style="color: red;">{{ error }}</p> 
-          {% endfor %}
-        </p>
-    {% endfor %}
-    {% if account_form_form.non_field_errors %}
-        <div style="color: red;">
-            <p>{{ account_form.non_field_errors }}</p>
+<div class="container">
+  <div class="row">
+    <div class="co-xl-6 mx-auto" >
+      <form class="form-signin" method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <!-- <img class="mb-4" src="{{ site.baseurl }}/docs/{{ site.docs_version }}/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+        <h1 class="h3 mb-3 font-weight-bolder text-center">Update Image</h1>
+        <div class="text-center">
+          <img class="rounded-circle account-img" src="{{ user.author.profile_image.url }}" />
         </div>
-      {% endif %}
+        <div class="text-center pt-2 pb-2">
+          {{ author_form }}
+        </div>
 
-      {% if success_message %}
-      <p style="color: green; text-align: center;">{{ success_message }}</p>
-      {% endif %}
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Save changes</button>
-  
-</form>
-<div class="d-flex flex-column">
-  <a class="m-auto" href="{% url 'password_change' %}">Change password</a>
+            {% if success_mess %}
+            <p style="color: green; text-align: center;">{{ success_mess }}</p>
+            {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save changes</button>
+        
+      </form>
+      
+    </div>
+    <div class="co-xl-6 mx-auto">
+      <form class="form-signin" method="post">
+        {% csrf_token %}
+        <!-- <img class="mb-4" src="{{ site.baseurl }}/docs/{{ site.docs_version }}/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+        <h1 class="h3 mb-3 font-weight-bolder text-center">Account Details</h1>
+        
+        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus value="{{ account_form.initial.email }}">
+      
+        <input type="text"  id="inputUsername" name="username" class="form-control" placeholder="username" required value="{{ account_form.initial.username }}">
+      
+        {% for  field in account_form %}
+              <p>
+                {% for error in field.errors %}
+                <p style="color: red;">{{ error }}</p> 
+                {% endfor %}
+              </p>
+          {% endfor %}
+          {% if account_form_form.non_field_errors %}
+              <div style="color: red;">
+                  <p>{{ account_form.non_field_errors }}</p>
+              </div>
+            {% endif %}
+      
+            {% if success_message %}
+            <p style="color: green; text-align: center;">{{ success_message }}</p>
+            {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save changes</button>
+        
+      </form>
+      <div class="d-flex flex-column">
+        <a class="m-auto" href="{% url 'password_change' %}">Change password</a>
+      </div>
+    </div>
+  </div>
 </div>
+
 
 <div class="container mt-4 p-4">
   <div class="row">

@@ -103,3 +103,52 @@ def post_update(request, id):
         'form': form
     }
     return render(request, 'post_create.html', context)
+
+# def account_view(request):
+    
+#     if not request.user.is_authenticated:
+#         return redirect('login')
+    
+#     context = {}
+    
+#     if request.POST:
+#         form = AuthorUpdateForm(request.POST, request.FILES, instance=request.user)
+#         if form.is_valid():
+#             form.initial = {
+               
+#                 "profile_image": request.POST.get('profile_image', False),
+#             }
+#             form.save()
+#             context['success_message'] = 'Updated'
+#     else:
+#         form = AuthorUpdateForm(
+#             initial = {
+                
+#                 "profile_image": request.user.author.profile_image
+#             }
+#         )
+#     context['author_form'] = form
+    
+    
+    
+#     return render(request, 'account/account.html', context)
+def account_view(request):
+    if request.method == 'POST':
+       
+        author_form = AuthorUpdateForm(request.POST,
+                                   request.FILES, 
+                                   instance=request.user.author)
+        
+        if author_form.is_valid():
+            author_form.save()
+            # messages.success(request, f'Your image has been updated!')
+            # context['success_mess'] = 'Updated'
+            
+    else:
+        
+        author_form = ProfileUpdateForm(instance=request.user.profile)
+    context = {
+        'author_form': author_form,
+        'success_mess': 'Updated'
+    }
+    return render(request, 'account/account.html', context)
