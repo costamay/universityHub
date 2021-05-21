@@ -49,7 +49,7 @@ def login_view(request):
     context['login_form'] = form
     return render(request, 'account/login.html', context)
         
-def account_view(request):
+def account_vieu(request):
     
     if not request.user.is_authenticated:
         return redirect('login')

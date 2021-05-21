@@ -5,8 +5,9 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
 
 from .forms import *
+from account.forms import *
 
-PROJECTS_PER_PAGE = 10
+PROJECTS_PER_PAGE = 20
 def get_author(user):
     qs = Author.objects.filter(user=user)
     if qs.exists():
@@ -104,51 +105,42 @@ def post_update(request, id):
     }
     return render(request, 'post_create.html', context)
 
-# def account_view(request):
-    
-#     if not request.user.is_authenticated:
-#         return redirect('login')
-    
-#     context = {}
-    
-#     if request.POST:
-#         form = AuthorUpdateForm(request.POST, request.FILES, instance=request.user)
-#         if form.is_valid():
-#             form.initial = {
-               
-#                 "profile_image": request.POST.get('profile_image', False),
-#             }
-#             form.save()
-#             context['success_message'] = 'Updated'
-#     else:
-#         form = AuthorUpdateForm(
-#             initial = {
-                
-#                 "profile_image": request.user.author.profile_image
-#             }
-#         )
-#     context['author_form'] = form
-    
-    
-    
-#     return render(request, 'account/account.html', context)
+
 def account_view(request):
     if request.method == 'POST':
        
-        author_form = AuthorUpdateForm(request.POST,
-                                   request.FILES, 
-                                   instance=request.user.author)
+        author_form = AuthorUpdateForm(request.POST, request.FILES, instance=request.user.author)
+        form = AccountUpdateForm(request.POST, instance=request.user)
         
-        if author_form.is_valid():
+        if author_form.is_valid() or form.is_valid():
             author_form.save()
-            # messages.success(request, f'Your image has been updated!')
-            # context['success_mess'] = 'Updated'
+
+         
+            form.initial = {
+                "email": request.POST['email'],
+                "username": request.POST['username'],
+            }
+            form.save()
+           
+            
             
     else:
         
-        author_form = ProfileUpdateForm(instance=request.user.profile)
+        author_form = AuthorUpdateForm(instance=request.user.author)
+        form = AccountUpdateForm(
+            initial = {
+                "email": request.user.email,
+                "username": request.user.username
+            }
+        )
+        
     context = {
         'author_form': author_form,
-        'success_mess': 'Updated'
+        'success_mess': 'Updated',
+        'success_message' : 'Updated',
+        'account_form' : form
+        
     }
+    project_posts = ProjectPost.objects.filter(author=request.user.author)
+    context['project_posts'] = project_posts
     return render(request, 'account/account.html', context)
